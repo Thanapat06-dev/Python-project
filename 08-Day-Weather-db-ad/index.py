@@ -2,10 +2,13 @@ import sqlite3
 from flask import Flask, render_template_string, request, redirect
 import requests
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-API_KEY = "77266b5b09139c59c88aa5639b8d1b6b"
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 CITY = "Bangkok"
 
 def get_db_connection():

@@ -1,12 +1,15 @@
 from flask import Flask, render_template_string
 import requests
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
+load_dotenv()
 # Set API & City
-API_KEY = "77266b5b09139c59c88aa5639b8d1b6b"
+API_KEY = os.getenv("API_KEY")
 CITY = "Bangkok"
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1483661538744209419/TuEIzrOD2gq_s3sb9o7zOYGEFD9rhSOnuKY0zZw0rsO006qvhWcVIASmiJXwCp--SmZJ"
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 
 def get_weather():
     url = f"http://api.openweathermap.org/data/2.5/weather?q={CITY}&appid={API_KEY}&units=metric"

@@ -2,9 +2,12 @@ import sqlite3
 from flask import Flask, render_template_string
 import requests
 from datetime import datetime
+import os
+from dotenv import load_dotenv
 
 # Set API & City
-API_KEY = "77266b5b09139c59c88aa5639b8d1b6b"
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 CITY = "Bangkok"
 
 app = Flask(__name__)

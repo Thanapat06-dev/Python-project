@@ -1,12 +1,15 @@
 import requests
+import os
+from dotenv import load_dotenv
 
 # --- 1. ส่วนของการตั้งค่า Configuration --- #
+load_dotenv()
 # Set API & City
-API_KEY = "77266b5b09139c59c88aa5639b8d1b6b"
+API_KEY = os.getenv("API_KEY")
 CITY = "Bangkok"
 
 # เชื่อมต่อกับ Discord
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1483661538744209419/TuEIzrOD2gq_s3sb9o7zOYGEFD9rhSOnuKY0zZw0rsO006qvhWcVIASmiJXwCp--SmZJ"
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 
 # --- 2. ฟังก์ชันสำหรับการส่งข้อมูลไปยัง Discord --- #
 def send_discord_notify(message):
