@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherPro Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Popins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <nav class="bg-indigo-600 p-4 text-white shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">⚡</span>
+                <h1 class="text-xl font-bold tracking-tight">WeatherPro <span class="text-indigo-200 font-light text-sm">v9.5</span></h1>
+            </div>
+            <a href="/log-now" class="bg-white/20 hover:bg-white/30 backdrop-blur-md px-5 py-2 rounded-lg font-medium transition all">
+                + บันทึกอากาศตอนนี้
+            </a>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6 max-w-5xl">
+        <div class="mb-10 text-center">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">ประวัติสภาพอากาศ</h2>
+            <form action="/" method="get" class="flex max-w-md mx-auto gap-2">
+                <input type="text" name="search" placeholder="ค้นหาตามสภาพอากาศ..." 
+                       value="{{ search_query }}"
+                       class="flex-1 p-3 rounded-xl border border-slate-200 shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                <button class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 shadow-lg shadow-indigo-200 transition">
+                    ค้นหา
+                </button>
+                {% if search_query %}
+                    <a href="/" class="p-3 text-slate-400 hover:text-slate-600">ล้าง</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100">
+            <table class="w-full text-left">
+                <thead class="bg-slate-50 border-b border-slate-100">
+                    <tr>
+                        <th class="p-5 text-sm font-semibold text-slate-600 uppercase tracking-wider">วัน-เวลา</th>
+                        <th class="p-5 text-sm font-semibold text-slate-600 uppercase tracking-wider">อุณหภูมิ</th>
+                        <th class="p-5 text-sm font-semibold text-slate-600 uppercase tracking-wider">สภาพอากาศ</th>
+                        <th class="p-5 text-sm font-semibold text-slate-600 uppercase tracking-wider">จัดการ</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for row in logs %}
+                    <tr class="hover:bg-slate-50/50 transition">
+                        <td class="p-5 text-slate-600 font-medium">{{ row['timestamp'] }}</td>
+                        <td class="p-5 text-indigo-600 font-bold text-lg">{{ row['temp'] }}°C</td>
+                        <td class="p-5">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-50 text-blue-600 border border-blue-100">
+                                {{ row['description'] | capitalize }}
+                            </span>
+                        </td>
+                        <td class="p-5 text-right">
+                            <a href="/delete/{{ row['id'] }}" 
+                               onclick="return confirm('คุณต้องการลบข้อมูลนี้ใช่หรือไม่?')"
+                               class="text-red-400 hover:text-red-600 hover:bg-red-50 px-3 py-2 rounded-lg transition font-medium">
+                                ลบข้อมูล
+                            </a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="p-10 text-center text-slate-400">ไม่พบข้อมูลในระบบ</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
